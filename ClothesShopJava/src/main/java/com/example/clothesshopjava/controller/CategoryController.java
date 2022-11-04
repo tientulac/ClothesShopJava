@@ -28,18 +28,18 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Category save(Category category) {
+    public Category save(@RequestBody Category category) {
         try {
-            Category cate = new Category();
             if (category.getCategory_id() > 0) {
-                cate.setUpdate_at(new Date());
-                cate = categoryService.updateOne(category);
+                category.setUpdate_at(new Date());
+                category = categoryService.updateOne(category);
             }
             else {
-                cate.setCreated_at(new Date());
-                cate = categoryService.insertOne(category);
+                System.out.println(category.getCategory_name());
+                category.setCreated_at(new Date());
+                category = categoryService.insertOne(category);
             }
-            return cate;
+            return category;
         }
         catch (Exception ex) {
             System.out.println(ex.getMessage());

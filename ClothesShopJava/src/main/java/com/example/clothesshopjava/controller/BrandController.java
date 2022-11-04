@@ -10,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(path = "api/v1/Brand") // router
+@RequestMapping(path = "api/v1/brand") // router
 public class BrandController {
     @Autowired
     BrandService brandService;
@@ -28,16 +28,15 @@ public class BrandController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Brand save(Brand Brand) {
+    public Brand save(@RequestBody Brand brand) {
         try {
-            Brand brand = new Brand();
-            if (Brand.getBrand_id() > 0) {
+            if (brand.getBrand_id() > 0) {
                 brand.setUpdate_at(new Date());
-                brand = brandService.updateOne(Brand);
+                brand = brandService.updateOne(brand);
             }
             else {
                 brand.setCreated_at(new Date());
-                brand = brandService.insertOne(Brand);
+                brand = brandService.insertOne(brand);
             }
             return brand;
         }
