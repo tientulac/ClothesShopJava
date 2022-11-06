@@ -1,9 +1,7 @@
 package com.example.clothesshopjava.services.account;
 
 import com.example.clothesshopjava.entities.Account;
-import com.example.clothesshopjava.entities.Brand;
 import com.example.clothesshopjava.repositories.AccountRepository;
-import com.example.clothesshopjava.repositories.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +15,33 @@ public class AccountServiceImp implements AccountService{
     @Override
     public Account findById(int id) {
         return accountRepository.findById(id).get();
+    }
+
+    @Override
+    public Account login(String user_name, String password) {
+        var list = accountRepository.findAll();
+        var acc = new Account();
+        for (Account a : list) {
+            if (a.getUser_name() == user_name && a.getPassword() == password) {
+                acc = a;
+            }
+            return acc;
+        }
+        return null;
+    }
+
+    @Override
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
+
+    @Override
+    public boolean deleteOne(int id) {
+        Account acc = findById(id);
+        if (acc != null) {
+            accountRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
